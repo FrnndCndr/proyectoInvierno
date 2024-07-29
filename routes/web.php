@@ -32,4 +32,11 @@ Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 //TODO: Routes Product
 
-Route::get('/products', [ProductController::class, 'index'])->name('products');
+Route::middleware('auth')->group(function () {
+    Route::get('/products', [ProductController::class, 'index'])->name('products');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('product.create');
+    Route::post('product', [ProductController::class, 'store'])->name('product.store');
+    Route::get('product/edit/{id}', [ProductController::class, 'show'])->name('product.edit');
+    Route::post('product/update/{id}', [ProductController::class, 'update'])->name('product.update');
+    Route::get('product/delete/{id}', [ProductController::class, 'destroy'])->name('product.delete');
+});
